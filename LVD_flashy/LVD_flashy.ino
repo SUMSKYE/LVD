@@ -33,9 +33,12 @@
  *   12.0 =~ 547
  */
  
-#define HIGH_WATER 571
-#define LOW_WATER 533
+// #define HIGH_WATER 571
+// #define LOW_WATER 533
 
+// ~ 13V custom setup
+#define HIGH_WATER 628  // 13.2V ?
+#define LOW_WATER  610  // 12.8V ?
 
 /*
  * ATTiny45 don't have hardware serial (or, I don't use it) and have
