@@ -49,8 +49,8 @@
 
 #define VOLTAGE_SCALE        47.62
 #define VOLTAGE_CALIBRATION  13.1
-#define VOLTAGE_HIGH         12.0
-#define VOLTAGE_LOW          11.5
+#define VOLTAGE_HIGH         12.7
+#define VOLTAGE_LOW          12.1
 
 #define LOW_TIMEOUT          30    // seconds
 
@@ -93,6 +93,7 @@ int low_timer = 0;
 #endif 
 
 // #define TESTING
+#undef TESTING
 
 byte state;
 
@@ -216,14 +217,6 @@ void setup() {
   flash(RED, 5);
   delay(1000);
   #endif
-  
-  // try to set it "on" *once*
-  int voltage = sampleVoltage(V_SENSE);
-  if (voltage > v_high) {
-    setLVD(HIGH);
-  } else {
-    setLVD(LOW);
-  }
 } // setup()
 
 
@@ -236,18 +229,12 @@ void loop() {
   Serial.println(voltage);
 #endif
 
-  if (voltage < v_low) {
-    low_timer += 5;
-    
-    if (low_timer >= LOW_TIMEOUT*10) {
-      setLVD(LOW);
-      delay(999999); // sleep a long time
-    } else {
-      flash(RED, 1);
-    }
-  } else {
-    low_timer = 0;
+  if (voltage >= v_high) {
+    setLVD(HIGH);
+    delay(2000);
+  } else if (voltage <= v_low) {
+    setLVD(LOW);
+    delay(2000);
   }
-   
-  delay(100); 
+  delay(100);
 } // loop()

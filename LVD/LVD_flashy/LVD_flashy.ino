@@ -412,7 +412,7 @@ void loop() {
  
   // if the JUMPER is in place, flash GREEN to show the sensorValue
   boolean debugging = digitalRead(JUMPER) == LOW;
-  if (debugging) {
+  if (debugging || true) {
     green.run();
     if (! green.isFlashing()) {
       green.start(sensorValue);
